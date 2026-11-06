@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Descubre el color - Paleta ampliada</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Segoe UI', Roboto, system-ui, sans-serif;
+            background: linear-gradient(135deg, #f5f7fa 0%, #e9edf5 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            padding: 2rem 1.5rem;
+        }
+
+        .card {
+            background: white;
+            border-radius: 2rem;
+            box-shadow: 0 20px 35px -8px rgba(0, 0, 0, 0.2), 0 10px 15px -6px rgba(0, 0, 0, 0.1);
+            padding: 2rem 2rem 2.5rem;
+            max-width: 1000px;
+            width: 100%;
+            transition: all 0.2s;
+        }
+
+        h1 {
+            text-align: center;
+            font-weight: 600;
+            font-size: 2.2rem;
+            letter-spacing: -0.5px;
+            color: #1e293b;
+            margin-bottom: 0.25rem;
+        }
+
+        .subtitulo {
+            text-align: center;
+            color: #475569;
+            font-size: 1rem;
+            margin-bottom: 2rem;
+            border-bottom: 2px dashed #cbd5e1;
+            padding-bottom: 1rem;
+        }
+
+        .paleta {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .color-btn {
+            border: none;
+            border-radius: 1rem;
+            padding: 0;
+            cursor: pointer;
+            box-shadow: 0 6px 14px -6px rgba(0, 0, 0, 0.25);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            aspect-ratio: 1 / 1;
+            width: 100%;
+            position: relative;
+            outline: 2px solid transparent;
+            outline-offset: 3px;
+            font-size: 0;
+            color: transparent;
+        }
+
+        .color-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 15px 25px -8px rgba(0, 0, 0, 0.35);
+            z-index: 2;
+        }
+
+        .color-btn:active {
+            transform: scale(0.97);
+        }
+
+        .color-btn:focus-visible {
+            outline: 3px solid #0f172a;
+            outline-offset: 4px;
+        }
+
+        /* ===== ESTILOS DE CADA COLOR ===== */
+        .btn-rojo        { background: #ef4444; }
+        .btn-azul        { background: #3b82f6; }
+        .btn-verde       { background: #22c55e; }
+        .btn-amarillo    { background: #eab308; }
+        .btn-naranja     { background: #f97316; }
+        .btn-morado      { background: #a855f7; }
+        .btn-rosa        { background: #ec4899; }
+        .btn-marron      { background: #8b5e3c; }
+        .btn-celeste     { background: #38bdf8; }
+        .btn-gris        { background: #64748b; }
+        .btn-negro       { background: #1e293b; }
+        .btn-blanco      { background: #ffffff; border: 2px solid #cbd5e1; }
+
+        /* Nuevos colores */
+        .btn-turquesa    { background: #14b8a6; }
+        .btn-violeta     { background: #8b5cf6; }
+        .btn-dorado      { background: #d4af37; }
+        .btn-plateado    { background: #c0c0c0; }
+        .btn-coral       { background: #ff7f50; }
+        .btn-lavanda     { background: #b57edc; }
+        .btn-salmon      { background: #fa8072; }
+        .btn-oliva       { background: #808000; }
+        .btn-beige       { background: #f5f5dc; border: 2px solid #d6d6c2; }
+        .btn-cian        { background: #06b6d4; }
+        .btn-magenta     { background: #d946ef; }
+        .btn-lima        { background: #84cc16; }
+        .btn-indigo      { background: #4f46e5; }
+        .btn-fucsia      { background: #c026d3; }
+        .btn-verdeoliva  { background: #556b2f; }
+        .btn-vino        { background: #722f37; }
+        .btn-mostaza     { background: #e1ad01; }
+        .btn-aguamarina  { background: #7fffd4; border: 2px solid #b0e0d6; }
+        .btn-crema       { background: #fffdd0; border: 2px solid #e8e5b0; }
+        .btn-melocoton   { background: #ffcba4; }
+        .btn-lila        { background: #c8a2c8; }
+        .btn-azulmarino  { background: #000080; }
+        .btn-verdemar    { background: #2e8b57; }
+        .btn-marfil      { background: #fffff0; border: 2px solid #e5e5d0; }
+
+        .mensaje-panel {
+            background: #f1f5f9;
+            border-radius: 3rem;
+            padding: 1.2rem 1.5rem;
+            text-align: center;
+            font-size: 1.4rem;
+            font-weight: 500;
+            color: #0f172a;
+            box-shadow: inset 0 2px 8px rgba(0,0,0,0.03), 0 4px 10px rgba(0,0,0,0.05);
+            border: 1px solid #e2e8f0;
+            transition: transform 0.15s ease, background 0.2s, color 0.2s;
+            min-height: 5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            word-break: break-word;
+            position: sticky;
+            bottom: 1rem;
+            backdrop-filter: blur(4px);
+        }
+
+        .mensaje-panel span {
+            background: white;
+            padding: 0.4rem 1.2rem;
+            border-radius: 2rem;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+            display: inline-block;
+            color: #1e293b;
+        }
+
+        .mensaje-panel .color-elegido {
+            font-weight: 700;
+            text-transform: capitalize;
+        }
+
+        .footer {
+            text-align: center;
+            font-size: 0.8rem;
+            color: #94a3b8;
+            margin-top: 1.8rem;
+        }
+
+        @media (max-width: 500px) {
+            .card {
+                padding: 1.5rem;
+            }
+            h1 {
+                font-size: 1.8rem;
+            }
+            .paleta {
+                gap: 0.7rem;
+                grid-template-columns: repeat(4, 1fr);
+            }
+            .mensaje-panel {
+                font-size: 1.1rem;
+                padding: 1rem;
+                min-height: 4.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="card">
+    <h1>🎨 ¿Qué color es?</h1>
+    <div class="subtitulo">Haz clic en cualquier color para descubrirlo — 36 colores disponibles</div>
+
+    <div class="paleta">
+        <!-- Colores originales -->
+        <button class="color-btn btn-rojo"       data-color="Rojo"       aria-label="Rojo"></button>
+        <button class="color-btn btn-azul"       data-color="Azul"       aria-label="Azul"></button>
+        <button class="color-btn btn-verde"      data-color="Verde"      aria-label="Verde"></button>
+        <button class="color-btn btn-amarillo"   data-color="Amarillo"   aria-label="Amarillo"></button>
+        <button class="color-btn btn-naranja"    data-color="Naranja"    aria-label="Naranja"></button>
+        <button class="color-btn btn-morado"     data-color="Morado"     aria-label="Morado"></button>
+        <button class="color-btn btn-rosa"       data-color="Rosa"       aria-label="Rosa"></button>
+        <button class="color-btn btn-marron"     data-color="Marrón"     aria-label="Marrón"></button>
+        <button class="color-btn btn-celeste"    data-color="Celeste"    aria-label="Celeste"></button>
+        <button class="color-btn btn-gris"       data-color="Gris"       aria-label="Gris"></button>
+        <button class="color-btn btn-negro"      data-color="Negro"      aria-label="Negro"></button>
+        <button class="color-btn btn-blanco"     data-color="Blanco"     aria-label="Blanco"></button>
+
+        <!-- Nuevos colores -->
+        <button class="color-btn btn-turquesa"   data-color="Turquesa"   aria-label="Turquesa"></button>
+        <button class="color-btn btn-violeta"    data-color="Violeta"    aria-label="Violeta"></button>
+        <button class="color-btn btn-dorado"     data-color="Dorado"     aria-label="Dorado"></button>
+        <button class="color-btn btn-plateado"   data-color="Plateado"   aria-label="Plateado"></button>
+        <button class="color-btn btn-coral"      data-color="Coral"      aria-label="Coral"></button>
+        <button class="color-btn btn-lavanda"    data-color="Lavanda"    aria-label="Lavanda"></button>
+        <button class="color-btn btn-salmon"     data-color="Salmón"     aria-label="Salmón"></button>
+        <button class="color-btn btn-oliva"      data-color="Oliva"      aria-label="Oliva"></button>
+        <button class="color-btn btn-beige"      data-color="Beige"      aria-label="Beige"></button>
+        <button class="color-btn btn-cian"       data-color="Cian"       aria-label="Cian"></button>
+        <button class="color-btn btn-magenta"    data-color="Magenta"    aria-label="Magenta"></button>
+        <button class="color-btn btn-lima"       data-color="Lima"       aria-label="Lima"></button>
+        <button class="color-btn btn-indigo"     data-color="Índigo"     aria-label="Índigo"></button>
+        <button class="color-btn btn-fucsia"     data-color="Fucsia"     aria-label="Fucsia"></button>
+        <button class="color-btn btn-verdeoliva" data-color="Verde oliva" aria-label="Verde oliva"></button>
+        <button class="color-btn btn-vino"       data-color="Vino"       aria-label="Vino"></button>
+        <button class="color-btn btn-mostaza"    data-color="Mostaza"    aria-label="Mostaza"></button>
+        <button class="color-btn btn-aguamarina" data-color="Aguamarina" aria-label="Aguamarina"></button>
+        <button class="color-btn btn-crema"      data-color="Crema"      aria-label="Crema"></button>
+        <button class="color-btn btn-melocoton"  data-color="Melocotón"  aria-label="Melocotón"></button>
+        <button class="color-btn btn-lila"       data-color="Lila"       aria-label="Lila"></button>
+        <button class="color-btn btn-azulmarino" data-color="Azul marino" aria-label="Azul marino"></button>
+        <button class="color-btn btn-verdemar"   data-color="Verde mar"  aria-label="Verde mar"></button>
+        <button class="color-btn btn-marfil"     data-color="Marfil"     aria-label="Marfil"></button>
+    </div>
+
+    <div class="mensaje-panel" id="mensajePanel">
+        <span id="textoMensaje">👆 Esperando tu clic...</span>
+    </div>
+
+    <div class="footer">36 colores · Haz clic en cualquiera para ver su nombre</div>
+</div>
+
+<script>
+    (function() {
+        const botones = document.querySelectorAll('.color-btn');
+        const textoMensaje = document.getElementById('textoMensaje');
+        const panel = document.getElementById('mensajePanel');
+
+        function mostrarColor(event) {
+            const boton = event.currentTarget;
+            const nombreColor = boton.getAttribute('data-color');
+
+            textoMensaje.innerHTML = `El color es <span class="color-elegido">${nombreColor}</span>`;
+
+            panel.style.transform = 'scale(1.02)';
+            setTimeout(() => {
+                panel.style.transform = 'scale(1)';
+            }, 120);
+        }
+
+        botones.forEach(boton => {
+            boton.addEventListener('click', mostrarColor);
+        });
+
+        textoMensaje.textContent = '👆 Esperando tu clic...';
+    })();
+</script>
+
+</body>
+</html>
