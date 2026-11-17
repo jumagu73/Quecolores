@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Descubre el color - Paleta ampliada</title>
+    <title>¿Qué color es? — Explorar y Jugar</title>
     <style>
         * {
             box-sizing: border-box;
@@ -26,9 +26,8 @@
             border-radius: 2rem;
             box-shadow: 0 20px 35px -8px rgba(0, 0, 0, 0.2), 0 10px 15px -6px rgba(0, 0, 0, 0.1);
             padding: 2rem 2rem 2.5rem;
-            max-width: 1000px;
+            max-width: 1100px;
             width: 100%;
-            transition: all 0.2s;
         }
 
         h1 {
@@ -44,15 +43,47 @@
             text-align: center;
             color: #475569;
             font-size: 1rem;
-            margin-bottom: 2rem;
+            margin-bottom: 1.5rem;
             border-bottom: 2px dashed #cbd5e1;
             padding-bottom: 1rem;
         }
 
+        /* ===== TABS ===== */
+        .tabs {
+            display: flex;
+            gap: 0.5rem;
+            justify-content: center;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .tab {
+            border: 2px solid #e2e8f0;
+            background: #f8fafc;
+            color: #475569;
+            padding: 0.6rem 1.4rem;
+            border-radius: 999px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 600;
+            transition: all 0.15s;
+        }
+
+        .tab:hover {
+            background: #e2e8f0;
+        }
+
+        .tab.activo {
+            background: #1e293b;
+            color: white;
+            border-color: #1e293b;
+        }
+
+        /* ===== VISTA EXPLORAR ===== */
         .paleta {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
-            gap: 1rem;
+            grid-template-columns: repeat(auto-fill, minmax(90px, 1fr));
+            gap: 0.9rem;
             margin-bottom: 2rem;
         }
 
@@ -72,6 +103,10 @@
             color: transparent;
         }
 
+        .color-btn.claro {
+            border: 2px solid #cbd5e1;
+        }
+
         .color-btn:hover {
             transform: scale(1.05);
             box-shadow: 0 15px 25px -8px rgba(0, 0, 0, 0.35);
@@ -87,46 +122,6 @@
             outline-offset: 4px;
         }
 
-        /* ===== ESTILOS DE CADA COLOR ===== */
-        .btn-rojo        { background: #ef4444; }
-        .btn-azul        { background: #3b82f6; }
-        .btn-verde       { background: #22c55e; }
-        .btn-amarillo    { background: #eab308; }
-        .btn-naranja     { background: #f97316; }
-        .btn-morado      { background: #a855f7; }
-        .btn-rosa        { background: #ec4899; }
-        .btn-marron      { background: #8b5e3c; }
-        .btn-celeste     { background: #38bdf8; }
-        .btn-gris        { background: #64748b; }
-        .btn-negro       { background: #1e293b; }
-        .btn-blanco      { background: #ffffff; border: 2px solid #cbd5e1; }
-
-        /* Nuevos colores */
-        .btn-turquesa    { background: #14b8a6; }
-        .btn-violeta     { background: #8b5cf6; }
-        .btn-dorado      { background: #d4af37; }
-        .btn-plateado    { background: #c0c0c0; }
-        .btn-coral       { background: #ff7f50; }
-        .btn-lavanda     { background: #b57edc; }
-        .btn-salmon      { background: #fa8072; }
-        .btn-oliva       { background: #808000; }
-        .btn-beige       { background: #f5f5dc; border: 2px solid #d6d6c2; }
-        .btn-cian        { background: #06b6d4; }
-        .btn-magenta     { background: #d946ef; }
-        .btn-lima        { background: #84cc16; }
-        .btn-indigo      { background: #4f46e5; }
-        .btn-fucsia      { background: #c026d3; }
-        .btn-verdeoliva  { background: #556b2f; }
-        .btn-vino        { background: #722f37; }
-        .btn-mostaza     { background: #e1ad01; }
-        .btn-aguamarina  { background: #7fffd4; border: 2px solid #b0e0d6; }
-        .btn-crema       { background: #fffdd0; border: 2px solid #e8e5b0; }
-        .btn-melocoton   { background: #ffcba4; }
-        .btn-lila        { background: #c8a2c8; }
-        .btn-azulmarino  { background: #000080; }
-        .btn-verdemar    { background: #2e8b57; }
-        .btn-marfil      { background: #fffff0; border: 2px solid #e5e5d0; }
-
         .mensaje-panel {
             background: #f1f5f9;
             border-radius: 3rem;
@@ -137,7 +132,7 @@
             color: #0f172a;
             box-shadow: inset 0 2px 8px rgba(0,0,0,0.03), 0 4px 10px rgba(0,0,0,0.05);
             border: 1px solid #e2e8f0;
-            transition: transform 0.15s ease, background 0.2s, color 0.2s;
+            transition: transform 0.15s ease;
             min-height: 5rem;
             display: flex;
             align-items: center;
@@ -162,6 +157,138 @@
             text-transform: capitalize;
         }
 
+        /* ===== VISTA JUEGO ===== */
+        .juego {
+            display: none;
+        }
+
+        .juego.activo {
+            display: block;
+        }
+
+        .explorar {
+            display: none;
+        }
+
+        .explorar.activo {
+            display: block;
+        }
+
+        .hud {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        .hud-item {
+            background: #f1f5f9;
+            border: 1px solid #e2e8f0;
+            border-radius: 999px;
+            padding: 0.5rem 1.2rem;
+            font-weight: 700;
+            color: #1e293b;
+            font-size: 1rem;
+        }
+
+        .hud-item span {
+            color: #3b82f6;
+        }
+
+        .color-objetivo {
+            width: min(260px, 70vw);
+            aspect-ratio: 1 / 1;
+            margin: 0 auto 1.8rem;
+            border-radius: 1.5rem;
+            box-shadow: 0 15px 30px -10px rgba(0,0,0,0.35);
+            transition: transform 0.2s;
+        }
+
+        .color-objetivo.claro {
+            border: 3px solid #cbd5e1;
+        }
+
+        .opciones {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1rem;
+            max-width: 600px;
+            margin: 0 auto 1.5rem;
+        }
+
+        .opcion {
+            background: white;
+            border: 2px solid #e2e8f0;
+            border-radius: 1rem;
+            padding: 1rem;
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #1e293b;
+            cursor: pointer;
+            transition: all 0.15s;
+        }
+
+        .opcion:hover:not(:disabled) {
+            border-color: #3b82f6;
+            background: #eff6ff;
+            transform: translateY(-2px);
+        }
+
+        .opcion:disabled {
+            cursor: default;
+        }
+
+        .opcion.correcta {
+            background: #dcfce7;
+            border-color: #22c55e;
+            color: #166534;
+        }
+
+        .opcion.incorrecta {
+            background: #fee2e2;
+            border-color: #ef4444;
+            color: #991b1b;
+        }
+
+        .feedback {
+            text-align: center;
+            min-height: 2rem;
+            font-weight: 600;
+            font-size: 1.1rem;
+            margin-bottom: 1rem;
+        }
+
+        .feedback.ok { color: #16a34a; }
+        .feedback.err { color: #dc2626; }
+
+        .boton-siguiente {
+            display: block;
+            margin: 0 auto;
+            background: #1e293b;
+            color: white;
+            border: none;
+            border-radius: 999px;
+            padding: 0.9rem 2rem;
+            font-size: 1.1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: background 0.15s, transform 0.1s;
+        }
+
+        .boton-siguiente:hover {
+            background: #0f172a;
+        }
+
+        .boton-siguiente:active {
+            transform: scale(0.97);
+        }
+
+        .boton-siguiente:disabled {
+            background: #cbd5e1;
+            cursor: not-allowed;
+        }
+
         .footer {
             text-align: center;
             font-size: 0.8rem;
@@ -170,20 +297,19 @@
         }
 
         @media (max-width: 500px) {
-            .card {
-                padding: 1.5rem;
-            }
-            h1 {
-                font-size: 1.8rem;
-            }
+            .card { padding: 1.5rem; }
+            h1 { font-size: 1.8rem; }
             .paleta {
-                gap: 0.7rem;
+                gap: 0.6rem;
                 grid-template-columns: repeat(4, 1fr);
             }
             .mensaje-panel {
                 font-size: 1.1rem;
                 padding: 1rem;
                 min-height: 4.5rem;
+            }
+            .opciones {
+                grid-template-columns: 1fr;
             }
         }
     </style>
@@ -192,81 +318,358 @@
 
 <div class="card">
     <h1>🎨 ¿Qué color es?</h1>
-    <div class="subtitulo">Haz clic en cualquier color para descubrirlo — 36 colores disponibles</div>
+    <div class="subtitulo">100 colores para explorar y adivinar</div>
 
-    <div class="paleta">
-        <!-- Colores originales -->
-        <button class="color-btn btn-rojo"       data-color="Rojo"       aria-label="Rojo"></button>
-        <button class="color-btn btn-azul"       data-color="Azul"       aria-label="Azul"></button>
-        <button class="color-btn btn-verde"      data-color="Verde"      aria-label="Verde"></button>
-        <button class="color-btn btn-amarillo"   data-color="Amarillo"   aria-label="Amarillo"></button>
-        <button class="color-btn btn-naranja"    data-color="Naranja"    aria-label="Naranja"></button>
-        <button class="color-btn btn-morado"     data-color="Morado"     aria-label="Morado"></button>
-        <button class="color-btn btn-rosa"       data-color="Rosa"       aria-label="Rosa"></button>
-        <button class="color-btn btn-marron"     data-color="Marrón"     aria-label="Marrón"></button>
-        <button class="color-btn btn-celeste"    data-color="Celeste"    aria-label="Celeste"></button>
-        <button class="color-btn btn-gris"       data-color="Gris"       aria-label="Gris"></button>
-        <button class="color-btn btn-negro"      data-color="Negro"      aria-label="Negro"></button>
-        <button class="color-btn btn-blanco"     data-color="Blanco"     aria-label="Blanco"></button>
-
-        <!-- Nuevos colores -->
-        <button class="color-btn btn-turquesa"   data-color="Turquesa"   aria-label="Turquesa"></button>
-        <button class="color-btn btn-violeta"    data-color="Violeta"    aria-label="Violeta"></button>
-        <button class="color-btn btn-dorado"     data-color="Dorado"     aria-label="Dorado"></button>
-        <button class="color-btn btn-plateado"   data-color="Plateado"   aria-label="Plateado"></button>
-        <button class="color-btn btn-coral"      data-color="Coral"      aria-label="Coral"></button>
-        <button class="color-btn btn-lavanda"    data-color="Lavanda"    aria-label="Lavanda"></button>
-        <button class="color-btn btn-salmon"     data-color="Salmón"     aria-label="Salmón"></button>
-        <button class="color-btn btn-oliva"      data-color="Oliva"      aria-label="Oliva"></button>
-        <button class="color-btn btn-beige"      data-color="Beige"      aria-label="Beige"></button>
-        <button class="color-btn btn-cian"       data-color="Cian"       aria-label="Cian"></button>
-        <button class="color-btn btn-magenta"    data-color="Magenta"    aria-label="Magenta"></button>
-        <button class="color-btn btn-lima"       data-color="Lima"       aria-label="Lima"></button>
-        <button class="color-btn btn-indigo"     data-color="Índigo"     aria-label="Índigo"></button>
-        <button class="color-btn btn-fucsia"     data-color="Fucsia"     aria-label="Fucsia"></button>
-        <button class="color-btn btn-verdeoliva" data-color="Verde oliva" aria-label="Verde oliva"></button>
-        <button class="color-btn btn-vino"       data-color="Vino"       aria-label="Vino"></button>
-        <button class="color-btn btn-mostaza"    data-color="Mostaza"    aria-label="Mostaza"></button>
-        <button class="color-btn btn-aguamarina" data-color="Aguamarina" aria-label="Aguamarina"></button>
-        <button class="color-btn btn-crema"      data-color="Crema"      aria-label="Crema"></button>
-        <button class="color-btn btn-melocoton"  data-color="Melocotón"  aria-label="Melocotón"></button>
-        <button class="color-btn btn-lila"       data-color="Lila"       aria-label="Lila"></button>
-        <button class="color-btn btn-azulmarino" data-color="Azul marino" aria-label="Azul marino"></button>
-        <button class="color-btn btn-verdemar"   data-color="Verde mar"  aria-label="Verde mar"></button>
-        <button class="color-btn btn-marfil"     data-color="Marfil"     aria-label="Marfil"></button>
+    <div class="tabs">
+        <button class="tab activo" data-vista="explorar">🔍 Explorar</button>
+        <button class="tab" data-vista="juego">🎮 Jugar</button>
     </div>
 
-    <div class="mensaje-panel" id="mensajePanel">
-        <span id="textoMensaje">👆 Esperando tu clic...</span>
+    <!-- ================= EXPLORAR ================= -->
+    <div class="explorar activo" id="vistaExplorar">
+        <div class="paleta" id="paleta"></div>
+        <div class="mensaje-panel" id="mensajePanel">
+            <span id="textoMensaje">👆 Esperando tu clic...</span>
+        </div>
     </div>
 
-    <div class="footer">36 colores · Haz clic en cualquiera para ver su nombre</div>
+    <!-- ================= JUEGO ================= -->
+    <div class="juego" id="vistaJuego">
+        <div class="hud">
+            <div class="hud-item">Puntos: <span id="puntos">0</span></div>
+            <div class="hud-item">Racha: <span id="racha">0</span></div>
+            <div class="hud-item">Récord: <span id="record">0</span></div>
+        </div>
+
+        <div class="color-objetivo" id="colorObjetivo"></div>
+
+        <div class="opciones" id="opciones"></div>
+
+        <div class="feedback" id="feedback"></div>
+
+        <button class="boton-siguiente" id="btnSiguiente">Siguiente color →</button>
+    </div>
+
+    <div class="footer" id="footer"></div>
 </div>
 
 <script>
-    (function() {
-        const botones = document.querySelectorAll('.color-btn');
-        const textoMensaje = document.getElementById('textoMensaje');
-        const panel = document.getElementById('mensajePanel');
+(function() {
+    // ============================================================
+    //  LISTA DE 100 COLORES  (nombre + hex)
+    // ============================================================
+    const colores = [
+        // ---------- ROJOS Y DERIVADOS (12) ----------
+        { nombre: "Rojo",            hex: "#ef4444" },
+        { nombre: "Rojo oscuro",     hex: "#b91c1c" },
+        { nombre: "Rojo claro",      hex: "#fca5a5" },
+        { nombre: "Carmesí",         hex: "#dc143c" },
+        { nombre: "Rubí",            hex: "#9b111e" },
+        { nombre: "Ladrillo",        hex: "#b22222" },
+        { nombre: "Coral",           hex: "#ff7f50" },
+        { nombre: "Salmón",          hex: "#fa8072" },
+        { nombre: "Salmón claro",    hex: "#ffa07a" },
+        { nombre: "Terracota",       hex: "#e2725b" },
+        { nombre: "Vino",            hex: "#722f37" },
+        { nombre: "Borgoña",         hex: "#800020" },
 
-        function mostrarColor(event) {
-            const boton = event.currentTarget;
-            const nombreColor = boton.getAttribute('data-color');
+        // ---------- NARANJAS Y TIERRAS (12) ----------
+        { nombre: "Naranja",         hex: "#f97316" },
+        { nombre: "Naranja oscuro",  hex: "#c2410c" },
+        { nombre: "Naranja claro",   hex: "#fdba74" },
+        { nombre: "Naranja quemado", hex: "#cc5500" },
+        { nombre: "Mandarina",       hex: "#ff8800" },
+        { nombre: "Zanahoria",       hex: "#ed9121" },
+        { nombre: "Melocotón",       hex: "#ffcba4" },
+        { nombre: "Durazno",         hex: "#ffe5b4" },
+        { nombre: "Ocre",            hex: "#cc7722" },
+        { nombre: "Caqui",           hex: "#c3b091" },
+        { nombre: "Canela",          hex: "#d2691e" },
+        { nombre: "Cobre",           hex: "#b87333" },
 
-            textoMensaje.innerHTML = `El color es <span class="color-elegido">${nombreColor}</span>`;
+        // ---------- AMARILLOS Y DORADOS (10) ----------
+        { nombre: "Amarillo",        hex: "#eab308" },
+        { nombre: "Amarillo claro",  hex: "#fde047" },
+        { nombre: "Amarillo pálido", hex: "#fef08a" },
+        { nombre: "Mostaza",         hex: "#e1ad01" },
+        { nombre: "Dorado",          hex: "#d4af37" },
+        { nombre: "Oro viejo",       hex: "#cfaf4f" },
+        { nombre: "Limón",           hex: "#fff44f" },
+        { nombre: "Maíz",            hex: "#fbec5d" },
+        { nombre: "Crema",           hex: "#fffdd0" },
+        { nombre: "Marfil",          hex: "#fffff0" },
 
+        // ---------- VERDES (14) ----------
+        { nombre: "Verde",           hex: "#22c55e" },
+        { nombre: "Verde oscuro",    hex: "#166534" },
+        { nombre: "Verde claro",     hex: "#86efac" },
+        { nombre: "Verde lima",      hex: "#84cc16" },
+        { nombre: "Lima",            hex: "#bfff00" },
+        { nombre: "Verde menta",     hex: "#98ff98" },
+        { nombre: "Verde bosque",    hex: "#228b22" },
+        { nombre: "Verde oliva",     hex: "#556b2f" },
+        { nombre: "Oliva",           hex: "#808000" },
+        { nombre: "Verde mar",       hex: "#2e8b57" },
+        { nombre: "Esmeralda",       hex: "#50c878" },
+        { nombre: "Verde pino",      hex: "#01796f" },
+        { nombre: "Verde musgo",     hex: "#8a9a5b" },
+        { nombre: "Verde salvia",    hex: "#9caf88" },
+
+        // ---------- CIANES Y TURQUESAS (10) ----------
+        { nombre: "Turquesa",        hex: "#14b8a6" },
+        { nombre: "Turquesa claro",  hex: "#5eead4" },
+        { nombre: "Cian",            hex: "#06b6d4" },
+        { nombre: "Cian claro",      hex: "#67e8f9" },
+        { nombre: "Aguamarina",      hex: "#7fffd4" },
+        { nombre: "Celeste",         hex: "#38bdf8" },
+        { nombre: "Celeste cielo",   hex: "#87ceeb" },
+        { nombre: "Petróleo",        hex: "#1f6f78" },
+        { nombre: "Azul verdoso",    hex: "#008b8b" },
+        { nombre: "Verde azulado",   hex: "#00a86b" },
+
+        // ---------- AZULES (14) ----------
+        { nombre: "Azul",            hex: "#3b82f6" },
+        { nombre: "Azul oscuro",     hex: "#1e3a8a" },
+        { nombre: "Azul claro",      hex: "#93c5fd" },
+        { nombre: "Azul marino",     hex: "#000080" },
+        { nombre: "Azul noche",      hex: "#191970" },
+        { nombre: "Azul acero",      hex: "#4682b4" },
+        { nombre: "Azul cielo",      hex: "#00bfff" },
+        { nombre: "Azul cobalto",    hex: "#0047ab" },
+        { nombre: "Zafiro",          hex: "#0f52ba" },
+        { nombre: "Añil",            hex: "#4b0082" },
+        { nombre: "Índigo",          hex: "#4f46e5" },
+        { nombre: "Azul denim",      hex: "#1560bd" },
+        { nombre: "Azul pizarra",    hex: "#6a5acd" },
+        { nombre: "Azul hielo",      hex: "#d6eaf8" },
+
+        // ---------- VIOLETAS Y PÚRPURAS (12) ----------
+        { nombre: "Morado",          hex: "#a855f7" },
+        { nombre: "Morado oscuro",   hex: "#6b21a8" },
+        { nombre: "Morado claro",    hex: "#d8b4fe" },
+        { nombre: "Violeta",         hex: "#8b5cf6" },
+        { nombre: "Violeta claro",   hex: "#c4b5fd" },
+        { nombre: "Lila",            hex: "#c8a2c8" },
+        { nombre: "Lavanda",         hex: "#b57edc" },
+        { nombre: "Malva",           hex: "#e0b0ff" },
+        { nombre: "Amatista",        hex: "#9966cc" },
+        { nombre: "Púrpura",         hex: "#800080" },
+        { nombre: "Orquídea",        hex: "#da70d6" },
+        { nombre: "Uva",             hex: "#6f2da8" },
+
+        // ---------- ROSAS Y MAGENTAS (10) ----------
+        { nombre: "Rosa",            hex: "#ec4899" },
+        { nombre: "Rosa oscuro",     hex: "#be185d" },
+        { nombre: "Rosa claro",      hex: "#f9a8d4" },
+        { nombre: "Rosa palo",       hex: "#ffb6c1" },
+        { nombre: "Rosa chicle",     hex: "#ff69b4" },
+        { nombre: "Fucsia",          hex: "#c026d3" },
+        { nombre: "Magenta",         hex: "#d946ef" },
+        { nombre: "Magenta oscuro",  hex: "#8b008b" },
+        { nombre: "Frambuesa",       hex: "#e30b5d" },
+        { nombre: "Cereza",          hex: "#de3163" },
+
+        // ---------- MARRONES (8) ----------
+        { nombre: "Marrón",          hex: "#8b5e3c" },
+        { nombre: "Marrón oscuro",   hex: "#5c4033" },
+        { nombre: "Marrón claro",    hex: "#c19a6b" },
+        { nombre: "Chocolate",       hex: "#7b3f00" },
+        { nombre: "Café",            hex: "#6f4e37" },
+        { nombre: "Avellana",        hex: "#954535" },
+        { nombre: "Sepia",           hex: "#704214" },
+        { nombre: "Tierra",          hex: "#a0522d" },
+
+        // ---------- GRISES Y NEUTROS (8) ----------
+        { nombre: "Gris",            hex: "#64748b" },
+        { nombre: "Gris oscuro",     hex: "#374151" },
+        { nombre: "Gris claro",      hex: "#d1d5db" },
+        { nombre: "Plata",           hex: "#c0c0c0" },
+        { nombre: "Pizarra",         hex: "#708090" },
+        { nombre: "Carbón",          hex: "#36454f" },
+        { nombre: "Negro",           hex: "#1e293b" },
+        { nombre: "Blanco",          hex: "#ffffff" }
+    ];
+
+    // ============================================================
+    //  UTILIDADES
+    // ============================================================
+    function esClaro(hex) {
+        const r = parseInt(hex.slice(1, 3), 16);
+        const g = parseInt(hex.slice(3, 5), 16);
+        const b = parseInt(hex.slice(5, 7), 16);
+        const lum = (0.299 * r + 0.587 * g + 0.114 * b) / 255;
+        return lum > 0.85;
+    }
+
+    function alAzar(arr) {
+        return arr[Math.floor(Math.random() * arr.length)];
+    }
+
+    // Mezcla (Fisher-Yates)
+    function mezclar(arr) {
+        const copia = arr.slice();
+        for (let i = copia.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [copia[i], copia[j]] = [copia[j], copia[i]];
+        }
+        return copia;
+    }
+
+    // ============================================================
+    //  VISTA EXPLORAR
+    // ============================================================
+    const paleta = document.getElementById('paleta');
+    const textoMensaje = document.getElementById('textoMensaje');
+    const panel = document.getElementById('mensajePanel');
+
+    colores.forEach(c => {
+        const btn = document.createElement('button');
+        btn.className = 'color-btn';
+        if (esClaro(c.hex)) btn.classList.add('claro');
+        btn.style.background = c.hex;
+        btn.setAttribute('data-color', c.nombre);
+        btn.setAttribute('aria-label', c.nombre);
+        btn.title = c.nombre;
+        btn.addEventListener('click', function() {
+            textoMensaje.innerHTML =
+                `El color es <span class="color-elegido">${c.nombre}</span>`;
             panel.style.transform = 'scale(1.02)';
-            setTimeout(() => {
-                panel.style.transform = 'scale(1)';
-            }, 120);
+            setTimeout(() => panel.style.transform = 'scale(1)', 120);
+        });
+        paleta.appendChild(btn);
+    });
+
+    // ============================================================
+    //  TABS
+    // ============================================================
+    const tabs = document.querySelectorAll('.tab');
+    const vistaExplorar = document.getElementById('vistaExplorar');
+    const vistaJuego = document.getElementById('vistaJuego');
+
+    tabs.forEach(t => {
+        t.addEventListener('click', () => {
+            tabs.forEach(x => x.classList.remove('activo'));
+            t.classList.add('activo');
+            if (t.dataset.vista === 'explorar') {
+                vistaExplorar.classList.add('activo');
+                vistaJuego.classList.remove('activo');
+            } else {
+                vistaJuego.classList.add('activo');
+                vistaExplorar.classList.remove('activo');
+                if (!juegoIniciado) iniciarJuego();
+            }
+        });
+    });
+
+    // ============================================================
+    //  JUEGO
+    // ============================================================
+    const colorObjetivo = document.getElementById('colorObjetivo');
+    const opcionesEl = document.getElementById('opciones');
+    const feedbackEl = document.getElementById('feedback');
+    const btnSiguiente = document.getElementById('btnSiguiente');
+    const puntosEl = document.getElementById('puntos');
+    const rachaEl = document.getElementById('racha');
+    const recordEl = document.getElementById('record');
+
+    let juegoIniciado = false;
+    let colorActual = null;
+    let puntos = 0;
+    let racha = 0;
+    let record = 0;
+    let respondido = false;
+
+    function iniciarJuego() {
+        juegoIniciado = true;
+        actualizarHUD();
+        nuevaRonda();
+    }
+
+    function actualizarHUD() {
+        puntosEl.textContent = puntos;
+        rachaEl.textContent = racha;
+        recordEl.textContent = record;
+    }
+
+    function nuevaRonda() {
+        respondido = false;
+        feedbackEl.textContent = '';
+        feedbackEl.className = 'feedback';
+        btnSiguiente.disabled = true;
+
+        // Elegir color correcto
+        colorActual = alAzar(colores);
+
+        // Mostrar color objetivo
+        colorObjetivo.style.background = colorActual.hex;
+        colorObjetivo.classList.toggle('claro', esClaro(colorActual.hex));
+
+        // Elegir 3 señuelos distintos (por nombre)
+        const señuelos = [];
+        const usados = new Set([colorActual.nombre]);
+        while (señuelos.length < 3) {
+            const c = alAzar(colores);
+            if (!usados.has(c.nombre)) {
+                usados.add(c.nombre);
+                señuelos.push(c.nombre);
+            }
         }
 
-        botones.forEach(boton => {
-            boton.addEventListener('click', mostrarColor);
+        // Mezclar correcta + señuelos
+        const opciones = mezclar([colorActual.nombre, ...señuelos]);
+
+        // Render opciones
+        opcionesEl.innerHTML = '';
+        opciones.forEach(nombre => {
+            const btn = document.createElement('button');
+            btn.className = 'opcion';
+            btn.textContent = nombre;
+            btn.addEventListener('click', () => responder(btn, nombre));
+            opcionesEl.appendChild(btn);
+        });
+    }
+
+    function responder(btn, nombreElegido) {
+        if (respondido) return;
+        respondido = true;
+        btnSiguiente.disabled = false;
+
+        const correcto = nombreElegido === colorActual.nombre;
+
+        // Deshabilitar todas y marcar
+        const botones = opcionesEl.querySelectorAll('.opcion');
+        botones.forEach(b => {
+            b.disabled = true;
+            if (b.textContent === colorActual.nombre) {
+                b.classList.add('correcta');
+            } else if (b === btn) {
+                b.classList.add('incorrecta');
+            }
         });
 
-        textoMensaje.textContent = '👆 Esperando tu clic...';
-    })();
+        if (correcto) {
+            puntos++;
+            racha++;
+            if (racha > record) record = racha;
+            feedbackEl.textContent = '✅ ¡Correcto!';
+            feedbackEl.className = 'feedback ok';
+        } else {
+            racha = 0;
+            feedbackEl.textContent = `❌ Era ${colorActual.nombre}`;
+            feedbackEl.className = 'feedback err';
+        }
+
+        actualizarHUD();
+    }
+
+    btnSiguiente.addEventListener('click', nuevaRonda);
+
+    // ============================================================
+    //  FOOTER
+    // ============================================================
+    document.getElementById('footer').textContent =
+        `${colores.length} colores · Explorá o jugá a adivinar`;
+})();
 </script>
 
 </body>
